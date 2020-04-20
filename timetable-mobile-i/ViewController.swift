@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     @IBAction func checkConnAct(_ sender: Any) {
         logsBrowser.text = "Try check connection action..."
         
-        let flt = ["name": "Andru"] as Dictionary<String, Any>
+        let flt = ["action": "Get Request", "name": "Andru"] as Dictionary<String, Any>
         doGetRequest(
             params: flt,
             callback: {(json) in
@@ -39,27 +39,23 @@ class ViewController: UIViewController {
     @IBAction func sendReqAct(_ sender: Any) {
         logsBrowser.text = "Send request action..."
         
-        enum PrinterError: Error {
-            case outOfPaper
-            case noToner
-            case onFire
-        }
-        func send(job: Int, toPrinter printerName: String) throws -> String {
-            if printerName == "Never Has Toner" {
-                throw PrinterError.noToner
+        let flt = ["action": "Post Request", "name": "Andru"] as Dictionary<String, Any>
+        doPostRequest(
+            params: flt,
+            callback: {(json) in
+                self.logsBrowser.text = json["comment"] as? String
+            },
+            errback: { (err) in
+                self.logsBrowser.text = err
             }
-            return "Job sent"
-        }
-        do {
-            let printerResponse = try send(job: 1040, toPrinter: "Never Has Toner")
-            print(printerResponse)
-        } catch {
-            print(error)
-        }
+        )
     }
+    
+    
     @IBAction func clearLogsAct(_ sender: Any) {
-        logsBrowser.text = "Logs"
+        logsBrowser.text = ""
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
