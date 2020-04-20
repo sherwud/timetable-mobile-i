@@ -23,32 +23,19 @@ class ViewController: UIViewController {
     @IBAction func checkConnAct(_ sender: Any) {
         logsBrowser.text = "Try check connection action..."
         
-        // если идем на рабочую машину не забыть подключить cisco на телефоне
-        // let url = URL(string: "http://usd-suhanov.corp.tensor.ru:1444/")!
-        let url = URL(string: "http://localhost:1444/test_page/")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            
-            DispatchQueue.main.async {
-                if error != nil {
-                    let errMsg = error?.localizedDescription
-                    self.logsBrowser.text = errMsg
-                    
-                }
-
-                guard let data = data else {return}
-                let answer = String(data: data, encoding: .utf8)!
-                print(answer)
-                //let jsondata = JSON(answer)
-                //print(jsondata["message"])
-                self.logsBrowser.text = answer
+        let flt = ["name": "Andru"] as Dictionary<String, Any>
+        doGetRequest(
+            params: flt,
+            callback: {(json) in
+                self.logsBrowser.text = json["comment"] as? String
+            },
+            errback: { (err) in
+                self.logsBrowser.text = err
             }
-        }
-        task.resume()
-        
+        )
     }
+    
+    
     @IBAction func sendReqAct(_ sender: Any) {
         logsBrowser.text = "Send request action..."
         
