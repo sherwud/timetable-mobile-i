@@ -8,6 +8,10 @@
 
 import Foundation
 
+func anyIntToString(val: Optional<Any>) -> Optional<String> {
+    return (val as? Int)?.description
+}
+
 func doGetRequest(
         params: Dictionary<String, Any>,
         callback:  @escaping (Dictionary<String, Any>) -> Void,

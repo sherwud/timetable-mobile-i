@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         doPostRequest(
             params: flt,
             callback: {(res) in
-                self.logsBrowser.text = res["comment"] as? String
+                self.logsBrowser.text = anyIntToString(val: res["age"])
             },
             errback: { (err) in
                 self.logsBrowser.text = err
