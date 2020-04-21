@@ -26,8 +26,8 @@ class ViewController: UIViewController {
         let flt = ["action": "Get Request", "name": "Andru"] as Dictionary<String, Any>
         doGetRequest(
             params: flt,
-            callback: {(json) in
-                self.logsBrowser.text = json["comment"] as? String
+            callback: {(res) in
+                self.logsBrowser.text = res["comment"] as? String
             },
             errback: { (err) in
                 self.logsBrowser.text = err
@@ -42,8 +42,8 @@ class ViewController: UIViewController {
         let flt = ["action": "Post Request", "name": "Andru"] as Dictionary<String, Any>
         doPostRequest(
             params: flt,
-            callback: {(json) in
-                self.logsBrowser.text = json["comment"] as? String
+            callback: {(res) in
+                self.logsBrowser.text = res["comment"] as? String
             },
             errback: { (err) in
                 self.logsBrowser.text = err

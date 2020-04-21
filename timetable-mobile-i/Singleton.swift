@@ -10,15 +10,20 @@ import Foundation
 
 func doGetRequest(
         params: Dictionary<String, Any>,
-        callback:  @escaping (_ json: Dictionary<String, Any>) -> Void,
-        errback: @escaping (_ error: String?) -> Void
+        callback:  @escaping (Dictionary<String, Any>) -> Void,
+        errback: @escaping (String) -> Void
 ) {
     
     // если идем на рабочую машину не забыть подключить cisco на телефоне
     // let url = URL(string: "http://usd-suhanov.corp.tensor.ru:1444/")!
     
-    let url = URL(string: "http://localhost:1444/test_page/")!
-    var request = URLRequest(url: url)
+    var url = URLComponents(string: "http://localhost:1444/test_page/")!
+    url.queryItems = params.map { (key, value) in
+        URLQueryItem(name: key, value: value as? String)
+    }
+    url.percentEncodedQuery = url.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+    
+    var request = URLRequest(url: url.url!)
     request.httpMethod = "GET"
     
     let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
