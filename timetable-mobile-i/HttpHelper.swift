@@ -22,8 +22,13 @@ extension HttpHelperError: CustomStringConvertible {
     }
 }
 
-
-func _initGetRequest(host: String, params: Dictionary<String, Any>) -> URLRequest {
+/// Функция для подготовки параметров GET запроса
+/// - Parameters:
+///   - host: адрес сервера, на который необходимо отправить запрос
+///   - params: массив параметров, которые должны быть переданы в запросе
+/// - Returns:
+///   - URLRequest: экземпляр класса, готовый к использованию в URLSession
+private func _initGetRequest(host: String, params: Dictionary<String, Any>) -> URLRequest {
     
     // если идем на рабочую машину не забыть подключить cisco на телефоне
     // let url = URL(string: "http://usd-suhanov.corp.tensor.ru:1444/")!
@@ -41,8 +46,13 @@ func _initGetRequest(host: String, params: Dictionary<String, Any>) -> URLReques
     return request
 }
 
-
-func _initPostRequest(host: String, params: Dictionary<String, Any>) -> URLRequest {
+/// Функция для подготовки параметров POST запроса, переданый массив будет серилизован в JSON
+/// - Parameters:
+///   - host: адрес сервера, на который необходимо отправить запрос
+///   - params: массив параметров, которые должны быть переданы в запросе
+/// - Returns:
+///   - URLRequest: экземпляр класса, готовый к использованию в URLSession
+private func _initPostRequest(host: String, params: Dictionary<String, Any>) -> URLRequest {
     
     // если идем на рабочую машину не забыть подключить cisco на телефоне
     // let url = URL(string: "http://usd-suhanov.corp.tensor.ru:1444/")!
@@ -57,7 +67,15 @@ func _initPostRequest(host: String, params: Dictionary<String, Any>) -> URLReque
     return request
 }
 
-
+/// Функция отправки HTTP запроса
+/// - Parameters:
+///   - type: тип запроса, может быть передан (GET или POST)
+///   - host: адрес сервера, на который необходимо отправить запрос
+///   - params: массив параметров, которые должны быть переданы в запросе
+///   - callback: колбек-функция, будет вызвана, в случае успешной обработки запроса
+///   - errback: колбек-функция, будет вызвана, в случае получения ошибки от сервера
+/// - Returns:
+///   - URLRequest: экземпляр класса, готовый к использованию в URLSession
 func doHttpRequest(
     type: String,
     host: String,

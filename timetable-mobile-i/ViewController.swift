@@ -40,18 +40,6 @@ class ViewController: UIViewController {
         } catch {
             self.logsBrowser.text = "Ooops! Something went wrong.."
         }
-        
-        
-        /*doGetRequest(
-            params: flt,
-            callback: {(res) in
-                self.logsBrowser.text = res["comment"] as? String
-            },
-            errback: { (err) in
-                self.logsBrowser.text = err
-            }
-        )*/
-        //let a = _initGetRequest(host: "sds", params: [:])
     }
     
     
@@ -74,16 +62,6 @@ class ViewController: UIViewController {
         } catch {
             self.logsBrowser.text = "Ooops! Something went wrong.."
         }
-        
-        /* doPostRequest(
-            params: flt,
-            callback: {(res) in
-                self.logsBrowser.text = anyIntToString(val: res["age"])
-            },
-            errback: { (err) in
-                self.logsBrowser.text = err
-            }
-        )*/
     }
     
     
