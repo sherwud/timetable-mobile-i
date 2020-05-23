@@ -8,6 +8,7 @@
 
 import UIKit
 
+import RealmSwift
 //import SwiftyJSON
 // pod deintegrate
 // SwiftyJSON
@@ -18,6 +19,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var sendReq: UIButton!
     @IBOutlet weak var logsBrowser: UITextView!
     @IBOutlet weak var clearLogs: UIButton!
+    @IBOutlet weak var userValueFld: UITextField!
+    @IBOutlet weak var addUserValBtn: UIButton!
     
     
     @IBAction func checkConnAct(_ sender: Any) {
@@ -64,16 +67,47 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addRecAct(_ sender: Any) {
+        
+        if userValueFld.text == "" {
+            logsBrowser.text = "You should enter some text in the field on the left."
+            return
+        }
+        
+        let usersList = Users()
+        usersList.idnew = usersList.incrementID()
+        usersList.namenew = userValueFld.text!
+        
+        let realm = try! Realm()
+        
+        try! realm.write() {
+            realm.add(usersList)
+            logsBrowser.text = "User with name " + userValueFld.text! + " was added."
+            userValueFld.text = ""
+        }
+    }
     
     @IBAction func clearLogsAct(_ sender: Any) {
         logsBrowser.text = ""
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        clearRealmModel()
     }
 
+    /// Функция для предварительной очистки базы в новой версии приложения
+    /// Только для отладки
+    func clearRealmModel() {
+        let realm = try! Realm()
+        let users = realm.objects(Users.self)
+        
+        for row in users {
+            try! realm.write {
+                realm.delete(row)
+            }
+        }
+    }
 }
 

@@ -31,7 +31,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Some text" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDo-IB-rwl">
-                                <rect key="frame" x="16" y="162" width="343" height="34"/>
+                                <rect key="frame" x="16" y="162" width="241" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -60,15 +60,25 @@
                                     <action selector="sendReqAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Mm-9F-k4Y"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8TR-Og-v1x">
+                                <rect key="frame" x="296" y="164" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addRecAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="irg-AM-lGS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="addUserValBtn" destination="8TR-Og-v1x" id="g22-vf-tKy"/>
                         <outlet property="checkConn" destination="U4l-oB-ySa" id="0s0-ES-mp1"/>
                         <outlet property="clearLogs" destination="Vv4-pt-HgI" id="kUr-Uj-lYa"/>
                         <outlet property="logsBrowser" destination="dwS-e0-1hb" id="eCm-fK-0Nq"/>
                         <outlet property="sendReq" destination="Olg-FG-ViS" id="YcB-ih-GR1"/>
+                        <outlet property="userValueFld" destination="uDo-IB-rwl" id="fgt-Nn-bo9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
