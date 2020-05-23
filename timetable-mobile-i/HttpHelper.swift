@@ -76,6 +76,45 @@ private func _initPostRequest(host: String, params: Dictionary<String, Any>) -> 
 ///   - errback: колбек-функция, будет вызвана, в случае получения ошибки от сервера
 /// - Returns:
 ///   - URLRequest: экземпляр класса, готовый к использованию в URLSession
+/// - Examples:
+/**
+     /// GET REQUEST
+     logsBrowser.text = "Try check connection action..."
+     let flt = ["action": "Get Request", "name": "Andru"] as Dictionary<String, Any>
+     do {
+         try doHttpRequest(
+                 type: "GET",
+                 host: "http://localhost:1444/test_page/",
+                 params: flt,
+                 callback: {(res) in
+                     self.logsBrowser.text = res["comment"] as? String
+                 },
+                 errback: { (err) in
+                     self.logsBrowser.text = err
+                 }
+         )
+     } catch {
+         self.logsBrowser.text = "Ooops! Something went wrong.."
+     }
+ 
+     /// POST REQUEST
+     logsBrowser.text = "Send request action..."
+     let flt = ["action": "Post Request", "name": "Andru"] as Dictionary<String, Any>
+     do {
+         try doHttpRequest(type: "POST",
+                 host: "http://localhost:1444/test_page/",
+                 params: flt,
+                 callback: {(res) in
+                     self.logsBrowser.text = anyIntToString(val: res["age"])
+                 },
+                 errback: { (err) in
+                     self.logsBrowser.text = err
+                 }
+         )
+     } catch {
+         self.logsBrowser.text = "Ooops! Something went wrong.."
+     }
+ */
 func doHttpRequest(
     type: String,
     host: String,
