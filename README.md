@@ -6,18 +6,19 @@ iOS app for tensor it crowd
 
 ### Подключаем зависимости из pods
 
-Устанавливаем [cocoapods](https://cocoapods.org/ "Менеджер зависимостей")
+Устанавливаем [CocoaPods](https://cocoapods.org/ "Менеджер зависимостей")
+
 Устанавливаем [Realm](https://realm.io/ "Локальная БД на вашем устройстве")
 
 Открывааем корень проекта в консоли и запускаем команду
-< pod init >
+    pod init
 
 Так будут подключены:
 - локальная БД Realm
 - SwiftyJSON
 
 Если что то пошло не так:
-< pod deintegrate >
+    pod deintegrate
 
 ### Открытие проекта
 
