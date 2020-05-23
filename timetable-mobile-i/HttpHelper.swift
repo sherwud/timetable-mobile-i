@@ -81,6 +81,8 @@ private func _initPostRequest(host: String, params: Dictionary<String, Any>) -> 
      /// GET REQUEST
      logsBrowser.text = "Try check connection action..."
      let flt = ["action": "Get Request", "name": "Andru"] as Dictionary<String, Any>
+     /// OR YOU CAN USE EMPTY FILTER LIKE THIS
+     let empty_flt = [:]
      do {
          try doHttpRequest(
                  type: "GET",
@@ -100,6 +102,8 @@ private func _initPostRequest(host: String, params: Dictionary<String, Any>) -> 
      /// POST REQUEST
      logsBrowser.text = "Send request action..."
      let flt = ["action": "Post Request", "name": "Andru"] as Dictionary<String, Any>
+     /// OR YOU CAN USE EMPTY FILTER LIKE THIS
+     let empty_flt = [:]
      do {
          try doHttpRequest(type: "POST",
                  host: "http://localhost:1444/test_page/",

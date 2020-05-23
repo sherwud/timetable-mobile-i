@@ -13,7 +13,16 @@ import RealmSwift
 // pod deintegrate
 // SwiftyJSON
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        <#code#>
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        <#code#>
+    }
+    
 
     @IBOutlet weak var checkConn: UIButton!
     @IBOutlet weak var sendReq: UIButton!
@@ -21,20 +30,41 @@ class ViewController: UIViewController {
     @IBOutlet weak var clearLogs: UIButton!
     @IBOutlet weak var userValueFld: UITextField!
     @IBOutlet weak var addUserValBtn: UIButton!
+    //@IBOutlet weak var bossChanger: UIPickerView!
     
     
     @IBAction func checkConnAct(_ sender: Any) {
         logsBrowser.text = "Try check connection action..."
-        
-        let flt = ["action": "Get Request", "name": "Andru"] as Dictionary<String, Any>
-        
+                
         do {
             try doHttpRequest(
                     type: "GET",
-                    host: "http://localhost:1444/test_page/",
-                    params: flt,
+                    host: "http://localhost:1444/fvds/",
+                    params: [:],
                     callback: {(res) in
-                        self.logsBrowser.text = res["comment"] as? String
+                        var msg = "List from server:\n"
+                        
+                        let realm = try! Realm()
+
+                        try! realm.write() {
+                            for (login, name) in res {
+                                msg += login + "\t-\t" + (name as! String) + "\n"
+                                
+                                let newuser = Users()
+                                newuser.idnew = newuser.incrementID()
+                                newuser.login = login
+                                newuser.name = name as! String
+                                
+                                realm.add(newuser)
+                            }
+                        }
+                        
+                        let users_list = realm.objects(Users.self)
+                        msg += "\nList from database:\n"
+                        for row in users_list {
+                            msg += (row["login"] as! String) + "\t-\t" + (row["name"] as! String) + "\n"
+                        }
+                        self.logsBrowser.text = msg
                     },
                     errback: { (err) in
                         self.logsBrowser.text = err
@@ -76,7 +106,7 @@ class ViewController: UIViewController {
         
         let usersList = Users()
         usersList.idnew = usersList.incrementID()
-        usersList.namenew = userValueFld.text!
+        usersList.name = userValueFld.text!
         
         let realm = try! Realm()
         
@@ -95,6 +125,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         clearRealmModel()
+        
+        // Настройка чейнджера выбора руководителя
+        pickerView.delegate = self
+        pickerView.dataSource = self
     }
 
     /// Функция для предварительной очистки базы в новой версии приложения

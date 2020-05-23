@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // --- REALM MIGRATIONS DOCS
         let config = Realm.Configuration(
-            schemaVersion: 13,
+            schemaVersion: 15,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1) {
                     // Обновление primary key

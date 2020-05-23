@@ -12,6 +12,20 @@ import RealmSwift
 
 let time_periods = ["05:00", "07:00", "08:00", "10:00", "11:00", "13:00", "15:00"]
 
+class Users: Object {
+    @objc dynamic var idnew = 0
+    @objc dynamic var login = ""
+    @objc dynamic var name = ""
+    @objc dynamic var iswork = true
+    @objc dynamic var changedate = NSDate()
+    
+    func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(Users.self).max(ofProperty: "idnew") as Int? ?? 0) + 1
+    }
+}
+
+
 
 //class User: Object {
 //    @objc dynamic var id: Int32 = 0
@@ -59,18 +73,3 @@ let time_periods = ["05:00", "07:00", "08:00", "10:00", "11:00", "13:00", "15:00
 //    }
 //}
 
-class Users: Object {
-    @objc dynamic var idnew = 0
-    @objc dynamic var namenew = ""
-    @objc dynamic var createdAtnew = NSDate()
-    
-    
-    // primary key
-//    override static func primaryKey() -> String? {
-//        return "id"
-//    }
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(Users.self).max(ofProperty: "idnew") as Int? ?? 0) + 1
-    }
-}
