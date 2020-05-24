@@ -10,28 +10,37 @@ import UIKit
 
 import RealmSwift
 //import SwiftyJSON
-// pod deintegrate
-// SwiftyJSON
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        <#code#>
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        <#code#>
-    }
-    
-
     @IBOutlet weak var checkConn: UIButton!
     @IBOutlet weak var sendReq: UIButton!
     @IBOutlet weak var logsBrowser: UITextView!
     @IBOutlet weak var clearLogs: UIButton!
     @IBOutlet weak var userValueFld: UITextField!
     @IBOutlet weak var addUserValBtn: UIButton!
-    //@IBOutlet weak var bossChanger: UIPickerView!
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        // todo: Предварительная очистка локальной базы. Только для отладки!
+        clearRealmModel()
+    }
+    
+    /// Функция для предварительной очистки базы в новой версии приложения
+    /// Только для отладки
+    func clearRealmModel() {
+        let realm = try! Realm()
+        let users = realm.objects(Users.self)
+        
+        for row in users {
+            try! realm.write {
+                realm.delete(row)
+            }
+        }
+    }
     
     @IBAction func checkConnAct(_ sender: Any) {
         logsBrowser.text = "Try check connection action..."
@@ -119,29 +128,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func clearLogsAct(_ sender: Any) {
         logsBrowser.text = ""
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        clearRealmModel()
-        
-        // Настройка чейнджера выбора руководителя
-        pickerView.delegate = self
-        pickerView.dataSource = self
-    }
-
-    /// Функция для предварительной очистки базы в новой версии приложения
-    /// Только для отладки
-    func clearRealmModel() {
-        let realm = try! Realm()
-        let users = realm.objects(Users.self)
-        
-        for row in users {
-            try! realm.write {
-                realm.delete(row)
-            }
-        }
     }
 }
 
