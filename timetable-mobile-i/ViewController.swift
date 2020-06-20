@@ -11,7 +11,9 @@ import UIKit
 import RealmSwift
 //import SwiftyJSON
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,
+                      UIPickerViewDelegate,
+                      UIPickerViewDataSource {
     
     @IBOutlet weak var checkConn: UIButton!
     @IBOutlet weak var sendReq: UIButton!
@@ -19,6 +21,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var clearLogs: UIButton!
     @IBOutlet weak var userValueFld: UITextField!
     @IBOutlet weak var addUserValBtn: UIButton!
+    @IBOutlet weak var bossFilterBtn: UIButton!
+    @IBOutlet weak var bossPickerToolbar: UIToolbar!
+    @IBOutlet weak var bossFilterPicker: UIPickerView!
     
     
     override func viewDidLoad() {
@@ -26,7 +31,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // todo: Предварительная очистка локальной базы. Только для отладки!
-        clearRealmModel()
+        // clearRealmModel()
+        
+        // Настройка пикера выбора руководителя
+        setBossList()
+        bossFilterPicker.delegate = self
+        bossFilterPicker.dataSource = self
     }
     
     /// Функция для предварительной очистки базы в новой версии приложения
@@ -41,6 +51,44 @@ class ViewController: UIViewController {
             }
         }
     }
+    /// Функция загрузки списка руководителей
+    func setBossList() {
+        let realm = try! Realm()
+        let users_list = realm.objects(Users.self)
+        for row in users_list {
+            boss_list.append((row["name"] as! String))
+        }
+    }
+    
+    
+    // Настройка пикера выбора руководителя
+    var boss_list:[String] = []
+    
+    @IBAction func changeBossFilterAct(_ sender: Any) {
+        if boss_list.count != 0 {
+            bossFilterPicker.isHidden = false
+            bossPickerToolbar.isHidden = false
+        }
+    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return boss_list.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+           self.view.endEditing(true)
+           return boss_list[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        bossFilterBtn.setTitle(self.boss_list[row], for: bossFilterBtn.state)
+        //bossFilterPicker.isHidden = true
+    }
+    @IBAction func bossPickerToolbarDoneBtn(_ sender: Any) {
+        bossFilterPicker.isHidden = true
+        bossPickerToolbar.isHidden = true
+    }
+    
     
     @IBAction func checkConnAct(_ sender: Any) {
         logsBrowser.text = "Try check connection action..."
